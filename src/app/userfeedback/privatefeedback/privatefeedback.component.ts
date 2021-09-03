@@ -3,6 +3,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
+
 import { observable } from 'rxjs';
 import { DatastoreService } from 'src/app/services/datastore.service';
 import { DhisdataService } from 'src/app/services/dhisdata.service';
@@ -22,12 +23,14 @@ export class PrivatefeedbackComponent implements OnInit {
   loadingprivate = false;
   sender = '';
   started = false;
+ 
 
   msg: any[] = [];
   count: number;
   step = 0;
   myForm: FormGroup;
   status: string;
+  objectdata : any 
 
   setStep(index: number) {
     this.step = index;
@@ -47,7 +50,8 @@ export class PrivatefeedbackComponent implements OnInit {
     private sendmessages: NgxDhis2HttpClientService,
     // public users: DhisdataService,
     public feedback :  NgxDhis2HttpClientService,  
-    public datastore: DatastoreService
+    public datastore: DatastoreService,
+    private datsetsupdate: NgxDhis2HttpClientService
     
   ) {}
 
@@ -57,6 +61,8 @@ export class PrivatefeedbackComponent implements OnInit {
     this.reactiveForm();
     // this.getsender();
     this.rejectrequest()
+
+    this.getdatastoreobject()
   }
   // getsender() {
   //   if (
@@ -160,15 +166,20 @@ export class PrivatefeedbackComponent implements OnInit {
   
  rejectrequest() {
    
-  return this.datastore.getdastoreobject().subscribe((data)=>{
-    console.log(data)
-  })
-
-  
-  
   }
 
   acceptrequest(){
+
     
+    
+  }
+
+  getdatastoreobject(){
+    return this.datastore.getdastoreobject().subscribe((data)=>{
+      console.log(data)
+
+      this.objectdata = data
+
+     })
   }
 }

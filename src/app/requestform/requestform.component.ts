@@ -55,7 +55,8 @@ export class RequestformComponent implements OnInit {
      private alldatasets : DatasetService,
      private request : NgxDhis2HttpClientService,
      private _snackBar: MatSnackBar,
-     private usergroups : UserGroupsService
+     private usergroups : UserGroupsService,
+  
      
      ) { }
 
@@ -64,6 +65,7 @@ export class RequestformComponent implements OnInit {
     this.getdatasets()
     this.reactiveForm()
     this.getuserGroups()
+    this.getdatastore()
    
     this.getorgunitsdatasets()
   }
@@ -252,6 +254,13 @@ export class RequestformComponent implements OnInit {
      
     
   } 
+getdatastore(){
+  return this.request.get('dataStore.json').subscribe((data)=>{
+    console.log(data)
+  })
+}
+
+
 
 
 }
