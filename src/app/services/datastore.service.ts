@@ -12,6 +12,6 @@ export class DatastoreService {
 
 
   getdastoreobject(){
-   return this.datastorerequest.get('dataStore.json')
+   return this.datastorerequest.get('dataStore/UserSupportApp.json')
   }
 }

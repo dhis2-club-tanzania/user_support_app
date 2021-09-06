@@ -157,7 +157,7 @@ export class RequestformComponent implements OnInit {
   submitForm(){
 
     const requestPayload =  {
-       id : makeID(),
+       "id": makeID(),
       "subject":"REQUEST FOR APROVAL CHANGE IN DATASET",
       "text": "There is request to update datasets to ," +this.myForm.get('organizationunit').value+"  add the following data " + this.myForm.get('datasetsunit').value +" and remove the following "+this.myForm.get('datasetsunit').value ,
       "userGroups": [
@@ -172,18 +172,19 @@ export class RequestformComponent implements OnInit {
     {
       "action": "Add "+this.myForm.get('datasetsunit').value +" form from "+this.myForm.get('organizationunit').value,
       "method": "PUT",
+       "id": requestPayload.id,
       "payload": {
         "id": +this.myForm.get('datasetsunit').value,
         "name": this.myForm.get('datasetsunit').value,
         "organisationUnits": [
           {
-            "id": "y77LiPqLMoq"
+            "id": this.myForm.get('organizationunit').value,
           },
         ],
         "periodType": "Monthly"
       },
       "status": "OPEN",
-      "url": "api/dataSets/Lpw6GcnTrmS"
+      "url": "api/organisationUnits/"+ this.myForm.get('organizationunit').value,
     }
     
     // {
