@@ -21,36 +21,20 @@
       <mat-expansion-panel-header> 
         <mat-panel-title >
           <mat-icon>account_circle</mat-icon>
-           {{messageItem.user?.displayName}}
-          </mat-panel-title>
+          {{messageItem.userFirstname}} {{messageItem.userSurname}} 
+         </mat-panel-title>
         <mat-panel-description  >
           Subject :{{messageItem.subject}}
-         
-          
           <mat-icon>feedback</mat-icon>
         <span class="spacer"></span>
            {{messageItem.created}}
-          
-        </mat-panel-description>
+           </mat-panel-description>
       </mat-expansion-panel-header>
-
-      
-
-         <mat-card>
           <div *ngFor=" let message of messageItem.messages" >
             <mat-icon>account_circle</mat-icon>  {{message.sender.displayName}} <br>
            {{message.name}}
+           {{objectdata }}
           </div>
-         </mat-card>
-      
-       
-   
-         
-
-    
-
-       
-   
 <!-- 
 <mat-card>   {{messagesdata.messages?.name}}</mat-card> -->
 
@@ -65,15 +49,13 @@
       
         <button mat-stroked-button  style="margin-left: 10px;">DISCARD</button>
       </form> -->
-       
       <mat-action-row>
-        <button mat-raised-button  color="warn"  (click)="rejectrequest(messageItem.id)">Reject</button>
-        <button mat-raised-button color="primary"  (click)="acceptrequest()">Accept</button>
+        <button mat-raised-button  color="warn"  >Reject</button>
+        <button mat-raised-button color="primary">Accept</button>
       </mat-action-row>
-      
-
     </mat-expansion-panel>
   </mat-accordion>
+
 
 
   

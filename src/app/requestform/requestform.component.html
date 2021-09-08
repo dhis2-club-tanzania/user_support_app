@@ -37,8 +37,8 @@
              
                <mat-form-field appearance="fill" class="example-form">
                  <mat-label>Select organization units</mat-label>
-                 <mat-select formControlName="organizationunit"  >
-                  <mat-option [value] ="selecteditem.name" *ngFor="let selecteditem of selectedunits"> {{selecteditem.name}}   
+                 <mat-select formControlName="organizationunit"   #orgunit (selectionChange)="selectingorgunit($event.value)">
+                  <mat-option [value] = "selecteditem.id" *ngFor="let selecteditem of selectedunits"> {{selecteditem.name}}   
                             
 
 
@@ -88,23 +88,20 @@
                </mat-form-field >
                   <mat-form-field appearance="fill"  class="example-form"   >
                     <mat-label>Select dataset</mat-label>
-                    <mat-select formControlName="datasetsunit" multiple>
+                    <mat-select formControlName="datasetsunit"  multiple>
+                               <div   *ngFor="let data of  dataset " >  
 
-                      <!-- {{selecteditem.dataSets | json}} -->
+                                  <div    *ngFor="let item of selecteddatasets.dataSets" >
 
-                     
-
-                              <mat-option   *ngFor="let data of  dataset " >     {{data.name}}               </mat-option>
-                              
-                            
-    
+                                 <mat-option  *ngIf="item.id==data.id"  [value]="data.name">   {{ data.name}} </mat-option>  
+                
+                                  </div>
+                                  
+                                </div>
                          
                     </mat-select>
-
-                  </mat-form-field> 
-
-                  <!-- <app-dataset></app-dataset> -->
-                  </div>
+                  </mat-form-field>    
+                  </div>    
       
       </mat-dialog-content>
       <mat-dialog-actions align="end">

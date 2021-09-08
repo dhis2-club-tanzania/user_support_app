@@ -2,13 +2,13 @@
 <form class="example-form"  [formGroup]="myForm" (ngSubmit)="submitForm()" >
         <mat-form-field class ="example-full-width" appearance="legacy"    >
             <mat-label>To</mat-label>
-            <mat-select    formControlName="receiver">
+            <mat-select    formControlName="users">
               <mat-option>None</mat-option>
-              <mat-option  [value] ="receiver.displayName" *ngFor="let receiver of receiver">{{receiver.displayName}} </mat-option>
+              <mat-option  [value]="users.displayName" *ngFor="let users of user">{{users.displayName}} </mat-option>
              
             </mat-select>
           <!-- <input matInput type="text" hint="ariana"  formControlName="name"> -->
-          <mat-error *ngIf="errorHandling('subject', 'required')">
+          <mat-error *ngIf="errorHandling('user', 'required')">
             You must provide a <strong> receiver</strong>
          </mat-error>
         </mat-form-field>
@@ -16,7 +16,7 @@
         <mat-radio-group
           aria-labelledby="example-radio-group-label"
           class="example-radio-group"
-          [(ngModel)]="favoriteSeason">
+          [value]="favoriteSeason">
           <mat-radio-button class="example-radio-button" *ngFor="let type of types" [value]="type">
             {{type}}
           </mat-radio-button>
@@ -38,7 +38,7 @@
         </mat-form-field>
   <mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" >
       <!-- <button mat-stroked-button ><mat-icon>attach_file</mat-icon> ATTACHMENT</button> -->
-    <button mat-raised-button style="margin-left: 400px;" color= "primary" (click)="openSnackBar()" (click)="submitForm()"  matDialogClose="yes" >Submit </button>
+    <button mat-raised-button style="margin-left: 400px;" color= "primary" (click)="openSnackBar()" (click) ="submitForm()"  matDialogClose="yes" >Submit </button>
   </mat-dialog-actions>
 </form>
 

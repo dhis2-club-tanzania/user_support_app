@@ -88,7 +88,7 @@ export class CreateuserComponent implements OnInit  {
       "method": "POST",
       "payLoad" : {
         
-          id: Math.random().toString(36).substr(2, 5),
+          id: makeID(),
           "firstName": this.myForm.get("firstname").value,
           "surname": this.myForm.get("lastname").value,
           "email": this.myForm.get("email").value,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
 import { NotificationComponent } from '../notification/notification.component';
@@ -9,7 +9,7 @@ import { makeID } from '../shared/helpers/make-id.helper';
 import {SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {BehaviorSubject} from 'rxjs'
+import {BehaviorSubject, empty, observable} from 'rxjs'
 import { UserGroupsService } from '../services/user-groups.service';
 @Component({
   selector: 'app-requestform',
@@ -17,9 +17,14 @@ import { UserGroupsService } from '../services/user-groups.service';
   styleUrls: ['./requestform.component.css']
 })
 
+
+
 export class RequestformComponent implements OnInit {
 
-  
+
+  @ViewChild('orgunit') orgunit
+    
+  all : any  
   slectedorgunit = ""
   checked = true;
   isDataAvailable = false;
@@ -41,13 +46,17 @@ export class RequestformComponent implements OnInit {
 
   initialdataset : any []
   finaldataset : any []
+  selecteedorgunit: any;
+
+  selecteddatasets  = ''
 
   constructor( public units : OrganizationUnitsService ,
      public fb: FormBuilder ,
      private alldatasets : DatasetService,
      private request : NgxDhis2HttpClientService,
      private _snackBar: MatSnackBar,
-     private usergroups : UserGroupsService
+     private usergroups : UserGroupsService,
+  
      
      ) { }
 
@@ -56,7 +65,9 @@ export class RequestformComponent implements OnInit {
     this.getdatasets()
     this.reactiveForm()
     this.getuserGroups()
-    this.selectingorgunit(this.selectingorgunit)
+    this.getdatastore()
+   
+    this.getorgunitsdatasets()
   }
   
   reactiveForm() {
@@ -64,13 +75,21 @@ export class RequestformComponent implements OnInit {
 
     organizationunit: ['',[Validators.required]],
     datasetsunit: ['',[Validators.required]],
-     
+    selecteddatasets : ['',[Validators.required]]
     
-      
   })
         throw new Error('Method not implemented.');
   }
+      
 
+  // getorgunitsdatasets(){
+
+  //   return this.units.getorganizationunits().subscribe((data)=>{
+  //     console.log(data)
+  //     const all = data['organisationUnits']
+  //   })
+
+  // }
 
 
 
@@ -89,10 +108,26 @@ export class RequestformComponent implements OnInit {
        })
 
   }
+
+
+
+  getorgunitsdatasets(){
+    this.isDataAvailable = true
+
+       return this.units.getorganizationunits().subscribe((data : {}) =>{
+
+        this.isDataAvailable = true
+      
+      console.log(data)
+
+       this.selectedunits = data ['organisationUnits']
+      
+       })
+
+  }
+
   getdatasets() {
   
-
-   
     return this.alldatasets.getAllDataSets().subscribe((data)=>{
       this.isDataAvailable = true
       this.dataset = data ['dataSets']
@@ -122,8 +157,9 @@ export class RequestformComponent implements OnInit {
   submitForm(){
 
     const requestPayload =  {
+       "id": makeID(),
       "subject":"REQUEST FOR APROVAL CHANGE IN DATASET",
-      "text": "There is request to update datasets to ," +this.myForm.get('organizationunit').value+"  add the follwing data " + this.myForm.get('datasetsunit').value +"",
+      "text": "There is request to update datasets to ," +this.myForm.get('organizationunit').value+"  add the following data " + this.myForm.get('datasetsunit').value +" and remove the following "+this.myForm.get('datasetsunit').value ,
       "userGroups": [
         {
           "id": "QYrzIjSfI8z"
@@ -131,18 +167,38 @@ export class RequestformComponent implements OnInit {
       ]
     }
 
-    const requestobject =  {
-       id : makeID(),
-      "Action":"REQUEST FOR APROVAL CHANGE IN DATASET",
-      "datasets_added": this.myForm.get('datasetsunit').value,
-      "datasets_removed":  this.myForm.get('datasetsunit').value,
-      "organizationunit": +this.myForm.get('organizationunit').value,
-      "userGroups": [
-        {
-          "id": "QYrzIjSfI8z"
-        }
-      ]
+    const requestobject = 
+
+    {
+      "action": "Add "+this.myForm.get('datasetsunit').value +" form from "+this.myForm.get('organizationunit').value,
+      "method": "PUT",
+       "id": requestPayload.id,
+      "payload": {
+        "id": +this.myForm.get('datasetsunit').value,
+        "name": this.myForm.get('datasetsunit').value,
+        "organisationUnits": [
+          {
+            "id": this.myForm.get('organizationunit').value,
+          },
+        ],
+        "periodType": "Monthly"
+      },
+      "status": "OPEN",
+      "url": "api/organisationUnits/"+ this.myForm.get('organizationunit').value,
     }
+    
+    // {
+    
+    // //   "Action":"REQUEST FOR APROVAL CHANGE IN DATASET",
+    // //   "datasets_added": this.myForm.get('datasetsunit').value,
+    // //   "datasets_removed":  this.myForm.get('datasetsunit').value,
+    // //   "organizationunit": +this.myForm.get('organizationunit').value,
+    // //   "userGroups": [
+    // //     {
+    // //       "id": "QYrzIjSfI8z"
+    // //     }
+    // //   ]
+    // // }
     
 
     console.log(this.myForm)
@@ -157,7 +213,7 @@ export class RequestformComponent implements OnInit {
       (response) => console.log(response),
       (error) => console.log(error)
     )
-    this.request.post('dataStore/UserSupportApp/'+requestobject.id+'.json',requestobject).subscribe(
+    this.request.post('dataStore/UserSupportApp/'+requestPayload.id+'.json',requestobject).subscribe(
       (response) => console.log(response),
       (error) => console.log(error)
     )
@@ -165,17 +221,17 @@ export class RequestformComponent implements OnInit {
   }
 
 
-  selectorgunit(event){
+  // selectorgunit(event){
 
 
-    this.selectingorgunit  = event
+  //   this.selectingorgunit  = event
 
-    console.log(this.selectingorgunit)
+  //   console.log(this.selectingorgunit)
     
 
     
 
-  }
+  // }
 
   
 
@@ -187,8 +243,26 @@ export class RequestformComponent implements OnInit {
 
   }
 
-  selectingorgunit(event){
+  selectingorgunit(event : any ) {
+           for (let index = 0; index < event.length; index++) {
+          
+            return this.units.getorganizationunitsdatasets(event).subscribe(data => {
+
+              console.log(data)
+              this.selecteddatasets = data 
+            })
+         }
+     
     
-  }
+  } 
+getdatastore(){
+  return this.request.get('dataStore.json').subscribe((data)=>{
+    console.log(data)
+  })
+}
+
+
+
 
 }
+

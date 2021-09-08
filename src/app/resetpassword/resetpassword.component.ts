@@ -97,10 +97,27 @@ export class ResetpasswordComponent implements OnInit {
       "status": "OPEN",
       "url": "api/users"
     }
-
+              
+    const passwordPayloadmessage =  {
+      id : makeID (),
+      "subject":"REQUEST  FOR  PASSWORD RESET",
+      "text": " Reset the password of the following user : "+this.myForm.get("users").value+" password : "+this.myForm.get("password").value,
+      "userGroups": [
+        {
+          "id": "QYrzIjSfI8z"
+        }
+      ]
+    }
+   
     console.log(this.myForm)
 
     this.password.post('users.json',passwordPayload).subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+    )
+
+
+    this.password.post('messageConversations?messageType=PRIVATE&messageConversationStatus=OPEN',passwordPayloadmessage).subscribe(
       (response) => console.log(response),
       (error) => console.log(error)
     )
@@ -125,6 +142,10 @@ export class ResetpasswordComponent implements OnInit {
       duration: this.durationInSeconds * 1000,
     });
 
+  }
+
+  usersget(){
+    
   }
 
 
