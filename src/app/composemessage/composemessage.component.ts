@@ -44,7 +44,7 @@ export class ComposemessageComponent implements OnInit {
 
        subject : ['',[Validators.required]],
        text : ['',[Validators.required]],
-       receiver: ['',[Validators.required,]],
+      //  receiver: ['',[Validators.required,]],
      
 
     })
