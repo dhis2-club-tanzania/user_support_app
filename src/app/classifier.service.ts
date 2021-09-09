@@ -11,8 +11,7 @@ import { model, tensor } from '@tensorflow/tfjs';
 export class ClassifierService {
   MAX_SEQUENCE_LENGTH = 113;
 
-  
-  
+
   constructor(){
   
   }
@@ -52,8 +51,7 @@ export class ClassifierService {
 };
 async loadModel (){
   try{
-  const model_url = "../models/model.json"
-  let model =  await tf.loadLayersModel(model_url);
+  let model =  await tf.loadLayersModel('model.json');
   console.log(model.summary());
   }
   catch(e){

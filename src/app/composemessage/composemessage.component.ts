@@ -51,6 +51,7 @@ export class ComposemessageComponent implements OnInit {
     this. reactiveForm()
     this.fetchUsers()
     this.geteventvalue(this.myForm.get('text').value)
+    this.loadingModel();
     // this.userget()
   }
 
@@ -164,7 +165,7 @@ export class ComposemessageComponent implements OnInit {
    }
 
    loadingModel(){
-     const input = this.myForm.value;
+     const input = this.myForm.get('text').value;
      const word = this.classifier.word_preprocessor(input);
      const sequence = this.classifier.make_sequences(word);
      this.classifier.loadModel();
