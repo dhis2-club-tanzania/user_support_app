@@ -49,7 +49,7 @@ myForm: FormGroup;
 
     deletemessage(){
 
-      return this.messages.deletemessage().subscribe((data : {})=>{
+      return this.messages.deletemessage("").subscribe((data : {})=>{
         console.log(data)
            })
 

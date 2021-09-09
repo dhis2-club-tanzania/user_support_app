@@ -64,17 +64,6 @@ export class PrivatefeedbackComponent implements OnInit {
 
     this.getdatastoreobject()
   }
-  // getsender() {
-  //   if (
-  //     this.users.getUsers().subscribe((data) => {
-  //       console.log(data);
-
-  //       this.sender = data['users'];
-  //     })
-  //   )
-  //     this.loadingprivate = true;
-  // }
-
   getmessages() {
 
 
@@ -95,7 +84,7 @@ export class PrivatefeedbackComponent implements OnInit {
       text: ['', [Validators.required]],
       subject: ['', [Validators.required]],
     });
-    throw new Error('Method not implemented.');
+  
   }
 
   submitForm() {
@@ -165,21 +154,26 @@ export class PrivatefeedbackComponent implements OnInit {
 
   
  rejectrequest() {
+      
+   
    
   }
 
   acceptrequest(){
 
+      const dataapproavalpayload = [
+
+      ]
+
+      
     
     
   }
 
   getdatastoreobject(){
-    return this.datastore.getdastoreobject().subscribe((data)=>{
-      console.log(data)
-
-      this.objectdata = data
-
-     })
+     return this.datastore.getdastoreobject().subscribe((data: any)=> {                     
+         console.log(data)
+         this.objectdata = data
+      });
   }
 }

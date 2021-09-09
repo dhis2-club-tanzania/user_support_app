@@ -66,6 +66,7 @@ export class RequestformComponent implements OnInit {
     this.reactiveForm()
     this.getuserGroups()
     this.getdatastore()
+    this.loopsets()
    
     this.getorgunitsdatasets()
   }
@@ -78,7 +79,7 @@ export class RequestformComponent implements OnInit {
     selecteddatasets : ['',[Validators.required]]
     
   })
-        throw new Error('Method not implemented.');
+     
   }
       
 
@@ -152,6 +153,14 @@ export class RequestformComponent implements OnInit {
 
   }
 
+  loopsets(){
+    for (let index = 0; index < this.myForm.get('datasetsunit').value.length; index++) {
+    
+      console.log(this.myForm.get('datasetsunit').value)
+      
+    }
+  }
+
 
 
   submitForm(){
@@ -167,6 +176,8 @@ export class RequestformComponent implements OnInit {
       ]
     }
 
+   
+
     const requestobject = 
 
     {
@@ -174,13 +185,14 @@ export class RequestformComponent implements OnInit {
       "method": "PUT",
        "id": requestPayload.id,
       "payload": {
-        "id": +this.myForm.get('datasetsunit').value,
-        "name": this.myForm.get('datasetsunit').value,
-        "organisationUnits": [
+      "organisationUnits": 
           {
             "id": this.myForm.get('organizationunit').value,
+            "dataSets": [{
+               "name" : this.myForm.get('datasetsunit').value  
+            }]
           },
-        ],
+        
         "periodType": "Monthly"
       },
       "status": "OPEN",
@@ -209,7 +221,7 @@ export class RequestformComponent implements OnInit {
     )
 
     
-    this.request.post('messageConversations?messageType=TICKET&messageConversationStatus=OPEN',requestPayload).subscribe(
+    this.request.post('messageConversations?messageType=PRIVATE&messageConversationStatus=OPEN',requestPayload).subscribe(
       (response) => console.log(response),
       (error) => console.log(error)
     )
@@ -262,7 +274,9 @@ getdatastore(){
 }
 
 
+}
 
-
+function forEach(arg0: (element: any) => void) {
+  throw new Error('Function not implemented.');
 }
 

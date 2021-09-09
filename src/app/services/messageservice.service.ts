@@ -71,9 +71,9 @@ getValidationFeedback(){
  
 }
 
-deletemessage(){
-  return this.feedback.delete('messageConversations.json?fields=id')
-}
+deletemessage(messageid : number | string){
+  return this.feedback.delete('messageConversations/'+messageid+'.json?fields=id')
+} 
 
 create(users) {
   this.feedback.post('users.json',this.user)
