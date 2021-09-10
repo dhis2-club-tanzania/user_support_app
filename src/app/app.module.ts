@@ -54,6 +54,7 @@ import { ComposemessageComponent } from './composemessage/composemessage.compone
 import { DatasetComponent } from './dataset/dataset.component';
 import { ClassifierService } from './classifier.service';
 
+import * as tf from '@tensorflow/tfjs';
 
 
 
