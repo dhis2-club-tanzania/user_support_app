@@ -1,8 +1,8 @@
 
 {
     "version": "1.0.0-alpha.1",
-    "name": "user support",
-    "description": "user support",
+    "name": "user_support_app",
+    "description": "user_support_app",
     "appType": "APP",
     "launch_path": "index.html",
     "icons": {

@@ -94,12 +94,12 @@ export class ComposemessageComponent implements OnInit {
       "subject": this.myForm.get('subject').value,
       "text":this.myForm.get('text').value,
       "messageType" : this.myForm.get("feedtype").value,
-      "users": [
-        {
-          "id": this.myForm.get('user').value
-        },
+      // "users": [
+      //   {
+      //     "id": "",
+      //   },
       
-      ],
+      // ],
       "userGroups": [
         {
           "id": "ZoHNWQajIoe"
