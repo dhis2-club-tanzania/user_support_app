@@ -1,6 +1,5 @@
 import { sequence } from '@angular/animations';
-import { ViewChild } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { dataElementGroupReducer } from '@iapps/ngx-dhis2-data-filter/lib/store/reducers/data-element-group.reducer';
@@ -8,6 +7,9 @@ import { NgxDhis2HttpClientService } from '@iapps/ngx-dhis2-http-client';
 import { ClassifierService } from '../classifier.service';
 import { NotificationComponent } from '../notification/notification.component';
 import { DhisdataService } from '../services/dhisdata.service';
+import { MessageserviceService } from '../services/messageservice.service';
+import { OrganizationUnitsService } from '../services/organization-units.service';
+import { UserGroupsService } from '../services/user-groups.service';
 import { makeID } from '../shared/helpers/make-id.helper';
 
 @Component({
@@ -24,13 +26,14 @@ export class ComposemessageComponent implements OnInit {
   composefeedback = false
   myForm: FormGroup;
   durationInSeconds = 2;
-  messages: any;
+
 
   receiver=""
 
   favoriteSeason: string;
  types: string[] = ['private', 'feedback'];
   user: '';
+  unitsuser: any;
 
  
 
@@ -41,6 +44,9 @@ export class ComposemessageComponent implements OnInit {
     private classifier:ClassifierService,
     
 
+    private userunits : OrganizationUnitsService,
+    private usergroup : UserGroupsService,
+    private messages : NgxDhis2HttpClientService,
     private  _snackBar : MatSnackBar
   ) { 
 
@@ -52,6 +58,8 @@ export class ComposemessageComponent implements OnInit {
     this.fetchUsers()
     this.geteventvalue(this.myForm.get('text').value)
     this.loadingModel();
+    this.getorgunits()
+    this.getusergroup()
     // this.userget()
   }
 
@@ -64,10 +72,11 @@ export class ComposemessageComponent implements OnInit {
        subject : ['',[Validators.required]],
        text : ['',[Validators.required]],
        user: ['',[Validators.required,]],
+       feedtype : ['',[Validators.required]],
      
 
     })
-        throw new Error('Method not implemented.');
+       
   }
 
   submitForm(){
@@ -88,15 +97,15 @@ export class ComposemessageComponent implements OnInit {
 
     //   }
     const messagePayload = {
+      "id" : makeID(),
       "subject": this.myForm.get('subject').value,
       "text":this.myForm.get('text').value,
+      "messageType" : this.myForm.get("feedtype").value,
       "users": [
         {
-          "id": "OYLGMiazHtW"
+          "id": this.myForm.get('user').value
         },
-        {
-          "id": "N3PZBUlN8vq"
-        }
+      
       ],
       "userGroups": [
         {
@@ -172,5 +181,27 @@ export class ComposemessageComponent implements OnInit {
 
 
    }
+    getorgunits(){
+      return this.userunits.getorganizationunits().subscribe((data) =>{
+        console.log(data)
+
+        this.unitsuser = data ;
+      })
+    }
+
+    getusergroup(){
+      return this.usergroup.getuserGroups().subscribe((data)=>{
+        console.log(data)
+      })
+    }
+
+    onpredictingrequesttextarea( event : any ){
+
+      console.log(event)
+
+    }
+    onpredictingrequestsubject(event : any ){
+      console.log(event)
+    }
 
 }

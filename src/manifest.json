@@ -1,6 +1,6 @@
 {
-  "name": "ngx-seed-app",
-  "short_name": "ngx-seed-app",
+  "name": "user_support",
+  "short_name": "user_support",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

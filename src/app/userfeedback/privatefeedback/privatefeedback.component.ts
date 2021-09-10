@@ -8,6 +8,7 @@ import { observable } from 'rxjs';
 import { DatastoreService } from 'src/app/services/datastore.service';
 import { DhisdataService } from 'src/app/services/dhisdata.service';
 import { MessageserviceService } from 'src/app/services/messageservice.service';
+import { OrganizationUnitsService } from 'src/app/services/organization-units.service';
 import { makeID } from 'src/app/shared/helpers/make-id.helper';
 import { MessageConversation } from 'src/app/shared/messageconversation';
 
@@ -51,7 +52,8 @@ export class PrivatefeedbackComponent implements OnInit {
     // public users: DhisdataService,
     public feedback :  NgxDhis2HttpClientService,  
     public datastore: DatastoreService,
-    private datsetsupdate: NgxDhis2HttpClientService
+    private datsetsupdate: NgxDhis2HttpClientService,
+    private units : OrganizationUnitsService
     
   ) {}
 
@@ -60,21 +62,10 @@ export class PrivatefeedbackComponent implements OnInit {
 
     this.reactiveForm();
     // this.getsender();
-    this.rejectrequest()
+    this.rejectrequest("")
 
     this.getdatastoreobject()
   }
-  // getsender() {
-  //   if (
-  //     this.users.getUsers().subscribe((data) => {
-  //       console.log(data);
-
-  //       this.sender = data['users'];
-  //     })
-  //   )
-  //     this.loadingprivate = true;
-  // }
-
   getmessages() {
 
 
@@ -95,7 +86,7 @@ export class PrivatefeedbackComponent implements OnInit {
       text: ['', [Validators.required]],
       subject: ['', [Validators.required]],
     });
-    throw new Error('Method not implemented.');
+  
   }
 
   submitForm() {
@@ -164,22 +155,94 @@ export class PrivatefeedbackComponent implements OnInit {
   };
 
   
- rejectrequest() {
+ rejectrequest( messageid : number | string) {
+      
+     return this.messages.deletemessage(messageid)
    
   }
 
   acceptrequest(){
 
+      const dataapproavalpayload = [
+        
+        {
+          "info": {
+            "id": "DiszpKrYNg8",
+            "code": "OU_559",
+            "name": "Ngelehun CHC",
+            "shortName": "Ngelehun CHC",
+            "parentName": "Badjia",
+            "level": 4,
+            "levelName": "Facility",
+            "openingDate": "1970-01-01T00:00:00.000",
+            "longitude": -11.4197,
+            "latitude": 8.1039
+          },
+          "attributes": [
+            {
+              "id": "n2xYlNbsfko",
+              "label": "NGO ID",
+              "value": "GHE51"
+            },
+            {
+              "id": "xqWyz9jNCA5",
+              "label": "TZ code",
+              "value": "NGE54"
+            }
+          ],
+          "groupSets": [
+            {
+              "id": "Bpx0589u8y0",
+              "label": "Facility Ownership",
+              "value": "Public facilities"
+            },
+            {
+              "id": "J5jldMd8OHv",
+              "label": "Facility Type",
+              "value": "CHC"
+            }
+          ],
+          "dataItems": [
+            {
+              "id": "WUg3MYWQ7pt",
+              "label": "Total Population",
+              "value": 3503
+            },
+            {
+              "id": "DTVRnCGamkV",
+              "label": "Total population < 1 year",
+              "value": 140
+            },
+            {
+              "id": "vg6pdjObxsm",
+              "label": "Population of women of child bearing age (WRA)",
+              "value": 716
+            },
+            {
+              "id": "Uvn6LCg7dVU",
+              "label": "ANC 1 Coverage",
+              "value": 368.2
+            },
+            {
+              "id": "eTDtyyaSA7f",
+              "label": "FIC <1y",
+              "value": 291.4
+            }
+          ]
+        }
+      ]
+
+      
+
+      
     
     
   }
 
   getdatastoreobject(){
-    return this.datastore.getdastoreobject().subscribe((data)=>{
-      console.log(data)
-
-      this.objectdata = data
-
-     })
+     return this.datastore.getdastoreobject().subscribe((data: any)=> {                     
+         console.log(data)
+         this.objectdata = data
+      });
   }
 }

@@ -51,6 +51,14 @@ getPrivateFeedback(): Observable<MessageConversation[]> {
      )
  
 }
+getprivatefeedbackcount(){
+  return this.feedback.get('messageConversations.json?fields=*,assignee%5Bid%2C%20displayName%5D,messages%5B*%2Csender%5Bid%2CdisplayName%5D,attachments%5Bid%2C%20name%2C%20contentLength%5D%5D,userMessages%5Buser%5Bid%2C%20displayName%5D%5D&filter=messageType:eq:PRIVATE')
+  .pipe(
+    retry(1),
+    catchError(this.httpError)
+     )
+
+}
 
 getSystemFeedback(){
        
@@ -71,9 +79,9 @@ getValidationFeedback(){
  
 }
 
-deletemessage(){
-  return this.feedback.delete('messageConversations.json?fields=id')
-}
+deletemessage(messageid : number | string){
+  return this.feedback.delete('messageConversations/'+messageid+'.json?fields=id')
+} 
 
 create(users) {
   this.feedback.post('users.json',this.user)

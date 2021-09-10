@@ -10,80 +10,11 @@
     <div >
       <h2 mat-dialog-title>  Create a Request form </h2>
       <mat-dialog-content class="mat-typography" >
-      
-      
         <div  fxLayout="column" fxLayoutAlign="center center"  >
-
-               
-
-
-          <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-              <button mat-icon-button disabled></button>
-              <mat-checkbox class="checklist-leaf-node"
-                            [checked]="checklistSelection.isSelected(node)"
-                            (change)="todoLeafItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
-            </mat-tree-node>
-          
-            <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
-              <button mat-icon-button disabled></button>
-              <mat-form-field appearance="fill">
-                <mat-label>New item...</mat-label>
-                <input matInput #itemValue placeholder="Ex. Lettuce">
-              </mat-form-field>
-              <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
-            </mat-tree-node>
-          </mat-tree> -->
-             
                <mat-form-field appearance="fill" class="example-form">
                  <mat-label>Select organization units</mat-label>
                  <mat-select formControlName="organizationunit"   #orgunit (selectionChange)="selectingorgunit($event.value)">
-                  <mat-option [value] = "selecteditem.id" *ngFor="let selecteditem of selectedunits"> {{selecteditem.name}}   
-                            
-
-
-                    <!-- <mat-select formControlName="datasetsunit" multiple> -->
-
-                      <!-- {{selecteditem.dataSets | json}} -->
-
-                        <!-- <ng-container  *ngFor="let selecteditem of selectedunits" >
-
-                          <ng-container *ngFor="let dset of selecteditem.dataSets">
-
-                            <ng-container *ngFor="let data of  dataset ">
-
-                              <mat-option   *ngIf="(data.id==dset.id)" >     {{data.name}}               </mat-option>
-                              
-                            </ng-container>
-                            
-                                          
-                          </ng-container>
-                          
-
-                       
-
-                        </ng-container>
-                         
-                        
-                         
-                    </mat-select> -->
-                    <!-- <mat-select    >
-                      <mat-option  *ngFor="let selecteddata of selecteddatasets"> 
-                         <div      *ngFor="let data of selecteditem.dataSets"  >
-                          <div *ngIf="selecteddata.id==data.id">
-
-                            <mat-checkbox class="example-margin"  > {{selecteddata.displayName}} </mat-checkbox>
-                          
-                          </div>
-                         </div>  
-                      
-                      </mat-option>
-                     
-                  </mat-select> -->
-
-                  <!-- *ngFor="let data of dataset " >{{ data.displayName}} -->
-
-              </mat-option>       
+                  <mat-option [value] = "selecteditem.id" *ngFor="let selecteditem of selectedunits"> {{selecteditem.name}}</mat-option>       
                  </mat-select>
                </mat-form-field >
                   <mat-form-field appearance="fill"  class="example-form"   >

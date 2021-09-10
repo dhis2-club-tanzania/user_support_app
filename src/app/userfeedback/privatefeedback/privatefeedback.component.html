@@ -1,22 +1,4 @@
-<mat-accordion >
-
-    <!-- <table  class="table table-bordered">
-  
-    <thead>
-        <tr>
-          <th scope="col">profile</th>
-          <th scope="col">message type</th>
-          <th scope="col">feedback</th>
-          <th scope="col">approve</th>
-          <th scope="col">delete</th>
-          <th scope="col">pending request...</th>
-        </tr>
-      </thead>
-  
-    </table> -->
-  
-  
-          
+<mat-accordion >   
     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle  *ngFor="let messageItem of messagedata">
       <mat-expansion-panel-header> 
         <mat-panel-title >
@@ -33,28 +15,15 @@
           <div *ngFor=" let message of messageItem.messages" >
             <mat-icon>account_circle</mat-icon>  {{message.sender.displayName}} <br>
            {{message.name}}
-           {{objectdata }}
           </div>
-<!-- 
-<mat-card>   {{messagesdata.messages?.name}}</mat-card> -->
-
-      <!-- <form class="example-form"  [formGroup]="myForm" (ngSubmit)="submitForm()">
-
-        <mat-form-field class="example-full-width"  appearance="outline">
-          <mat-label>write a Text</mat-label>
-          <textarea matInput rows="5" cols="50" placeholder="text"  formControlName ="text" ></textarea>
-          <input    #file type="file" accept="image/*" (change)="upload(file.files)">
-        </mat-form-field>
-        <button mat-raised-button  color="primary" >Submit</button>
-      
-        <button mat-stroked-button  style="margin-left: 10px;">DISCARD</button>
-      </form> -->
       <mat-action-row>
-        <button mat-raised-button  color="warn"  >Reject</button>
-        <button mat-raised-button color="primary">Accept</button>
+        <button mat-raised-button color="warn" (click)="rejectrequest()" >Reject</button>
+        <button mat-raised-button color="primary" (click)="acceptrequest()">Accept</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
+
+  {{objectdata | json}}
 
 
 
