@@ -106,7 +106,7 @@ opencomposeDialog(){
 
 getmessagesprivate(){
 
-  return this.messages.getPrivateFeedback().subscribe((data : {})=>{
+  return this.messages.getprivatefeedbackcount().subscribe((data : {})=>{
       console.log(data)
 
       this.messagedata= data ['messageConversations']
