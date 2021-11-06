@@ -26,5 +26,6 @@ export interface MessageConversation {
     userGroupAccesses: any[];
     userMessages: any[];
     userSurname: string;
+    messageorgunit : number | string;
   }
   

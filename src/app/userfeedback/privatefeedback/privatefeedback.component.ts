@@ -54,6 +54,7 @@ export class PrivatefeedbackComponent implements OnInit {
     public datastore: DatastoreService,
     private datsetsupdate: NgxDhis2HttpClientService,
     private units : OrganizationUnitsService
+  
     
   ) {}
 
@@ -66,18 +67,22 @@ export class PrivatefeedbackComponent implements OnInit {
 
     this.getdatastoreobject()
   }
+   datastream : any 
+
   getmessages() {
 
-
-    return this.messages.getPrivateFeedback().subscribe((data: MessageConversation[]) => {
+        if (this.datastream){
+          this.datastream.unsubscribe();
+        }
+   this.datastream = this.messages.getPrivateFeedback().subscribe((data: MessageConversation[]) => {
       console.log(data);
     
       // this.messageConversation = JSON.parse(JSON.stringify(data));
 
       this.messagedata = data;
-      this.count = this.messagedata.length;
 
-      this.count = this.count;
+      // setTimeout(()=>{ this.getmessages(),6000});
+   
     });
   }
 
@@ -161,83 +166,7 @@ export class PrivatefeedbackComponent implements OnInit {
    
   }
 
-  acceptrequest(){
-
-      const dataapproavalpayload = [
-        
-        {
-          "info": {
-            "id": "DiszpKrYNg8",
-            "code": "OU_559",
-            "name": "Ngelehun CHC",
-            "shortName": "Ngelehun CHC",
-            "parentName": "Badjia",
-            "level": 4,
-            "levelName": "Facility",
-            "openingDate": "1970-01-01T00:00:00.000",
-            "longitude": -11.4197,
-            "latitude": 8.1039
-          },
-          "attributes": [
-            {
-              "id": "n2xYlNbsfko",
-              "label": "NGO ID",
-              "value": "GHE51"
-            },
-            {
-              "id": "xqWyz9jNCA5",
-              "label": "TZ code",
-              "value": "NGE54"
-            }
-          ],
-          "groupSets": [
-            {
-              "id": "Bpx0589u8y0",
-              "label": "Facility Ownership",
-              "value": "Public facilities"
-            },
-            {
-              "id": "J5jldMd8OHv",
-              "label": "Facility Type",
-              "value": "CHC"
-            }
-          ],
-          "dataItems": [
-            {
-              "id": "WUg3MYWQ7pt",
-              "label": "Total Population",
-              "value": 3503
-            },
-            {
-              "id": "DTVRnCGamkV",
-              "label": "Total population < 1 year",
-              "value": 140
-            },
-            {
-              "id": "vg6pdjObxsm",
-              "label": "Population of women of child bearing age (WRA)",
-              "value": 716
-            },
-            {
-              "id": "Uvn6LCg7dVU",
-              "label": "ANC 1 Coverage",
-              "value": 368.2
-            },
-            {
-              "id": "eTDtyyaSA7f",
-              "label": "FIC <1y",
-              "value": 291.4
-            }
-          ]
-        }
-      ]
-
-      
-
-      
-    
-    
-  }
+  
 
   getdatastoreobject(){
      return this.datastore.getdastoreobject().subscribe((data: any)=> {                     
@@ -245,4 +174,118 @@ export class PrivatefeedbackComponent implements OnInit {
          this.objectdata = data
       });
   }
+
+  acceptorgunits(){
+       
+    const payload = [
+      {
+        "lastUpdated": "2017-05-22T15:21:48.515",
+        "id": "Rp268JB6Ne4",
+        "href": "https://play.dhis2.org/2.36.3/api/33/organisationUnits/Rp268JB6Ne4",
+        "level": 4,
+        "created": "2012-02-17T15:54:39.987",
+        "name": "Adonkia CHP",
+        "shortName": "Adonkia CHP",
+        "code": "OU_651071",
+        "leaf": true,
+        "path": "/ImspTQPwCqd/at6UHUQatSo/qtr8GGlm4gg/Rp268JB6Ne4",
+        "sharing": {
+          "external": false,
+          "users": {
+            
+          },
+          "userGroups": {
+            
+          }
+        },
+        "displayFormName": "Adonkia CHP",
+        "favorite": false,
+        "dimensionItemType": "ORGANISATION_UNIT",
+        "displayName": "Adonkia CHP",
+        "displayShortName": "Adonkia CHP",
+        "externalAccess": false,
+        "periodOffset": 0,
+        "openingDate": "2010-01-01T00:00:00.000",
+        "dimensionItem": "Rp268JB6Ne4",
+        "parent": {
+          "id": "qtr8GGlm4gg"
+        },
+        "access": {
+          "read": true,
+          "update": true,
+          "externalize": false,
+          "delete": true,
+          "write": true,
+          "manage": true
+        },
+        "children": [
+          
+        ],
+        "translations": [
+          
+        ],
+        "organisationUnitGroups": [
+          {
+            "id": "f25dqv3Y7Z0"
+          }
+        ],
+        "ancestors": [
+          {
+            "id": "ImspTQPwCqd"
+          },
+          {
+            "id": "at6UHUQatSo"
+          },
+          {
+            "id": "qtr8GGlm4gg"
+          }
+        ],
+        "userGroupAccesses": [
+          
+        ],
+        "attributeValues": [
+          
+        ],
+        "users": [
+          
+        ],
+        "userAccesses": [
+          
+        ],
+        "dataSets": [
+          {
+            "id": "Y8gAn9DfAGU"
+          },
+          {
+            "id": "pBOMPrpg1QX"
+          },
+          
+         ],
+        "legendSets": [
+          
+        ],
+        "programs": [
+          {
+            "id": "q04UBOqq3rp"
+          },
+         
+          {
+            "id": "lxAQ7Zs9VYR"
+          },
+         
+        ],
+        "favorites": [
+          
+        ]
+      }
+    ]
+  
+    this.datsetsupdate.put('metadata.json',payload).subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+      )
+
+    
+  }
+
 }

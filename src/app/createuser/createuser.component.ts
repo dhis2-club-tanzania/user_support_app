@@ -9,6 +9,8 @@ import { OrganizationUnitsService } from '../services/organization-units.service
 import { UserrolesService } from '../services/userroles.service';
 import { UserGroupsService } from '../services/user-groups.service';
 import { makeID } from '../shared/helpers/make-id.helper';
+// import { UploadserviceService } from '../services/uploadservice.service';
+import { UploadfileserviceService } from '../services/uploadfileservice.service';
 
 
 @Component({
@@ -28,6 +30,7 @@ export class CreateuserComponent implements OnInit  {
   userRoles$ : Observable<any[]>
   userGroups$ : Observable <any []>
   durationInSeconds = 2;
+  fileToUpload: File | null = null;
  
  
 
@@ -39,6 +42,7 @@ export class CreateuserComponent implements OnInit  {
      private usergroups : UserGroupsService,
      private _snackBar : MatSnackBar,
      private request : NgxDhis2HttpClientService,
+     private fileUploadService : UploadfileserviceService
    ) { }
 
   
@@ -182,6 +186,17 @@ export class CreateuserComponent implements OnInit  {
     });
 
   }
+//   handleFileInput(files: FileList) {
+//     this.fileToUpload = files.item(0);
+// }
+
+// uploadFileToActivity() {
+//   this.fileUploadService.postFile(this.fileToUpload).subscribe(data => {
+//     // do something, if upload success
+//     }, error => {
+//       console.log(error);
+//     });
+// }
 
 
  

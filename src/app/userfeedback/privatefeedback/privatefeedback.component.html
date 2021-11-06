@@ -15,7 +15,7 @@
           <div *ngFor=" let message of messageItem.messages" >
             <mat-icon>account_circle</mat-icon>  {{message.sender.displayName}} <br>
            {{message.name}}
-           {{message.id}}
+           <!-- {{message.id}} -->
           </div>
       
       <mat-action-row>
@@ -24,8 +24,9 @@
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
+  <!-- {{objectdata | json}} -->
 
-  {{objectdata | json}}
+  <button mat-raised-button (click)="acceptorgunits()" color="primary"> update data</button>
 
 
 

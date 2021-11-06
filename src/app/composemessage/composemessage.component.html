@@ -32,7 +32,11 @@
         
         <mat-form-field class="example-full-width"  appearance="outline">
           <mat-label>write a feedback</mat-label>
-          <textarea matInput rows="10" cols="30" placeholder="text"  formControlName="text"  #text (selectionChange)="onpredictingrequesttextarea($event)"></textarea>
+
+          <textarea matInput rows="10" cols="30" placeholder="text"  formControlName="text" #input (changeSelection)="geteventvalue($event.value)"></textarea>
+
+
+
           <mat-error *ngIf="errorHandling('text', 'required')">
             You must provide write a <strong>request</strong>
          </mat-error>
